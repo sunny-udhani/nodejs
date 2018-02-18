@@ -36,8 +36,8 @@ var Client = require('node-rest-client').Client;
 var app = express();
 app.use(express.bodyParser());
 app.use("/images", express.static(__dirname + '/images'));
-handlebars  = require('express3-handlebars');
-hbs = handlebars.create();
+var handlebars  = require('express3-handlebars');
+var hbs = handlebars.create();
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
@@ -52,9 +52,9 @@ var db_port = "27017" ;
 var db_user = "cmpe281" ;
 var db_pwd  = "cmpe281" ;
 var db_name = "test" ;
-*/
 
-var db_host = (process.env.mongodb_host || "localhost" ) ;
+*/
+var db_host = (process.env.mongodb_host || "mongodb://cmpe281:cmpe281@ds239648.mlab.com:39648/heroku_90s7df4n" ) ;
 var db_port = (process.env.mongodb_port || "27017" ) ;
 var db_user = (process.env.mongodb_user || "cmpe281" ) ;
 var db_pwd  = (process.env.mongodb_pwd  || "cmpe281" ) ;
@@ -67,7 +67,7 @@ var db = new DB(db_name,
                              poolSize: 20}),
                             { w: 1 } );
 
-db_init = function (callback) {
+ var db_init = function (callback) {
     async.waterfall([
         // 1. open database 
         function (cb) {
@@ -103,12 +103,12 @@ var secretKey = "kwRg54x2Go9iEdl49jFENRM12Mp711QI" ;
 var get_hash = function( state, ts ) {
 
     // http://nodejs.org/api/crypto.html#crypto_crypto_createhmac_algorithm_key
-    text = state + "|" + ts + "|" + secretKey ;
-    hmac = crypto.createHmac("sha256", secretKey);
-    hmac.setEncoding('base64');
-    hmac.write(text);
-    hmac.end() ;
-    hash = hmac.read();
+    var text = state + "|" + ts + "|" + secretKey ;
+    var hmac = crypto.createHmac("sha256", secretKey);
+     hmac.setEncoding('base64');
+     hmac.write(text);
+     hmac.end() ;
+    var hash = hmac.read();
     //console.log( "HASH: " + hash )
     return hash ;
 
